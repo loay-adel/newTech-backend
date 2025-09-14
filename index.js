@@ -6,7 +6,7 @@ import helmet from "helmet";
 import compression from "compression";
 import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
-
+import cookieParser from "cookie-parser";
 // Routes
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -23,16 +23,15 @@ app.use(helmet());
 app.use(compression());
 app.use(mongoSanitize());
 app.use(hpp());
-
-// ✅ CORS مفتوح (للاختبار فقط)
+app.use(cookieParser());
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Accept-Language"],
   })
 );
-
 // ✅ Body parser
 app.use(express.json({ limit: "10mb" }));
 
